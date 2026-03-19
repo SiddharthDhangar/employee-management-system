@@ -3,14 +3,12 @@ import Header from "../other/Header";
 import TaskCount from "../other/TaskCount";
 import TaskList from "../TaskList/TaskList";
 
-const EmployeeDashboard = ({ data, onLogout }) => {
+const EmployeeDashboard = ({ handleLogout, data }) => {
   return (
-    <div className="text-white py-10 px-10 md:px-34 bg-[#1c1c1c] min-h-screen flex flex-col">
-      <Header data={data} onLogout={onLogout} />
+    <div className="min-h-screen bg-[#0f172a] p-6 space-y-6">
+      <Header handleLogout={handleLogout} data={data} />
       <TaskCount data={data} />
-      <div className="flex-1 mt-10">
-        <TaskList data={data} />
-      </div>
+      <TaskList data={data} />
     </div>
   );
 };

@@ -1,57 +1,56 @@
 import React, { useState } from "react";
 
-const Login = ({ handleLogin }) => {
-  const [credential, setCredential] = useState({
+const Login = ({ handleLogging }) => {
+  const [userCred, setUserCred] = useState({
     email: "",
     password: "",
   });
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    handleLogin(credential.email, credential.password);
-    setCredential({
-      email: "",
-      password: "",
-    });
-  };
-
   const userCredential = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setCredential({ ...credential, [name]: value });
+    setUserCred((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
-
+  const submitHandler = (e) => {
+    e.preventDefault();
+    handleLogging(userCred.email, userCred.password);
+  };
   return (
-    <form
-      onSubmit={submitHandler}
-      className="flex border border-gray-50 p-10 flex-col items-center w-[90%] sm:max-w-96 m-auto mt-40 gap-4 text-gray-800"
-    >
-      <div className="inline-flex items-center gap-2 mt-10">
-        <p className="prata-regular text-3xl text-white">Login In</p>
-        <hr className="border-none h-[1.5px] w-8 bg-gray-50" />
-      </div>
-      <input
-        onChange={userCredential}
-        className="w-full bg-white px-3 py-2 border border-gray-800"
-        type="email"
-        name="email"
-        value={credential.email}
-        placeholder="Email"
-        required
-      />
-      <input
-        onChange={userCredential}
-        className="w-full bg-white px-3 py-2 border border-gray-800"
-        type="password"
-        name="password"
-        value={credential.password}
-        placeholder="Password"
-        required
-      />
-      <button className="bg-black cursor-pointer text-white font-light px-8 py-2 mt-4">
-        Login
-      </button>
-    </form>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0f172a] to-[#1e293b]">
+      <form
+        onSubmit={submitHandler}
+        className="w-[90%] sm:max-w-md bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl p-8 flex flex-col gap-5"
+      >
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-white">Welcome Back 👋</h1>
+          <p className="text-gray-400 text-sm mt-1">Login to continue</p>
+        </div>
+
+        <input
+          type="email"
+          name="email"
+          value={userCred.email}
+          onChange={userCredential}
+          placeholder="Enter Email"
+          className="w-full px-4 py-3 rounded-lg bg-white/10 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <input
+          type="password"
+          name="password"
+          value={userCred.password}
+          onChange={userCredential}
+          placeholder="Enter Password"
+          className="w-full px-4 py-3 rounded-lg bg-white/10 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <button className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 transition-all text-white font-semibold">
+          Login
+        </button>
+      </form>
+    </div>
   );
 };
 

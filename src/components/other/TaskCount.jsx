@@ -1,23 +1,27 @@
 import React from "react";
 
 const TaskCount = ({ data }) => {
+  const { active, newTask, completed, failed } = data.taskCounts;
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-10 gap-5 screen">
-      <div className=" rounded-xl py-10 px-6 bg-blue-400">
-        <h2 className="font-semibold text-3xl">{data.taskCounts.completed}</h2>
-        <h3 className="text-xl font-medium">New Task</h3>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="bg-blue-600/20 border border-blue-500 p-6 rounded-xl shadow">
+        <h2 className="text-3xl font-bold text-white">{newTask}</h2>
+        <p className="text-blue-400 mt-1">New Tasks</p>
       </div>
-      <div className=" rounded-xl  py-10 px-6 bg-green-400">
-        <h2 className="font-semibold text-3xl">{data.taskCounts.active}</h2>
-        <h3 className="text-xl font-medium">Completed Task</h3>
+
+      <div className="bg-green-600/20 border border-green-500 p-6 rounded-xl shadow">
+        <h2 className="text-3xl font-bold text-white">{completed}</h2>
+        <p className="text-green-400 mt-1">Completed</p>
       </div>
-      <div className=" rounded-xl  py-10 px-6 bg-yellow-400">
-        <h2 className="font-semibold text-3xl">{data.taskCounts.failed}</h2>
-        <h3 className="text-xl font-medium">Accepted Task</h3>
+
+      <div className="bg-yellow-600/20 border border-yellow-500 p-6 rounded-xl shadow">
+        <h2 className="text-3xl font-bold text-white">{active}</h2>
+        <p className="text-yellow-400 mt-1">Accepted</p>
       </div>
-      <div className=" rounded-xl py-10 px-6 bg-red-400">
-        <h2 className="font-semibold text-3xl">{data.taskCounts.newTask}</h2>
-        <h3 className="text-xl font-medium">Failed Task</h3>
+
+      <div className="bg-red-600/20 border border-red-500 p-6 rounded-xl shadow">
+        <h2 className="text-3xl font-bold text-white">{failed}</h2>
+        <p className="text-red-400 mt-1">Failed</p>
       </div>
     </div>
   );

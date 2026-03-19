@@ -2,114 +2,100 @@ import React, { useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
 
 const CreateTask = () => {
-  const [userData, setUserData] = useAuth();
-
-  const [taskCreate, setTaskCreate] = useState({
+  const { userData, setUserData } = useAuth();
+  const [task, setTask] = useState({
     title: "",
     date: "",
     assign: "",
     category: "",
-    desc: "",
+    description: "",
   });
-
-  const AdminTaskCreation = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setTaskCreate({
-      ...taskCreate,
+  const TaskAssign = (e) => {
+    const { name, value } = e.target;
+    setTask((prev) => ({
+      ...prev,
+      [name]: value,
       active: false,
       newTask: true,
       completed: false,
       failed: false,
-      [name]: value,
-    });
+    }));
   };
-
   const submitHandler = (e) => {
     e.preventDefault();
-    const data = userData;
-    data.forEach((user) => {
-      if (taskCreate.assign == user.firstName) {
-        const newTasks = {
-          ...taskCreate,
+    const storedData = JSON.parse(localStorage.getItem("employees")) || [];
+    const data = [...storedData];
+    data.forEach((currEmp) => {
+      if (task.assign === currEmp.firstName) {
+        const newTask = {
+          ...task,
         };
-        user.tasks = [...user.tasks, newTasks];
-        user.taskCounts.newTask = user.taskCounts.newTask + 1;
+        currEmp.tasks = [...currEmp.tasks, newTask];
+        currEmp.taskCounts.newTask = currEmp.taskCounts.newTask + 1;
       }
     });
     setUserData(data);
+    localStorage.setItem("employees", JSON.stringify(data));
     console.log(data);
-    setTaskCreate({
+
+    setTask({
       title: "",
       date: "",
       assign: "",
       category: "",
-      desc: "",
+      description: "",
     });
   };
+
   return (
-    <div className="p-5 mt-7 bg-[#1c1c1c] rounded">
+    <div className="bg-[#111827] p-6 rounded-xl shadow-md">
       <form
         onSubmit={submitHandler}
-        className="flex flex-col lg:flex-row w-full items-start justify-between gap-6"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
       >
-        <div className="w-full lg:w-1/2">
-          <div className="mb-4">
-            <h3 className="text-sm text-gray-300 mb-0.5">Task Title</h3>
-            <input
-              value={taskCreate.title}
-              name="title"
-              onChange={AdminTaskCreation}
-              className="text-white placeholder-gray-400 text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border border-gray-500 "
-              type="text"
-              placeholder="make a ui design"
-            />
-          </div>
-          <div className="mb-4">
-            <h3 className="text-sm text-gray-300 mb-0.5">Date</h3>
-            <input
-              onChange={AdminTaskCreation}
-              name="date"
-              value={taskCreate.date}
-              className="text-white placeholder-gray-400 text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border border-gray-500"
-              type="date"
-              placeholder="date.."
-            />
-          </div>
-
-          <div className="mb-4">
-            <h3 className="text-sm text-gray-300 mb-0.5">Assign To</h3>
-            <input
-              onChange={AdminTaskCreation}
-              name="assign"
-              value={taskCreate.assign}
-              className="text-white placeholder-gray-400 text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border border-gray-500"
-              type="text"
-              placeholder="employee name.."
-            />
-          </div>
-          <div className="mb-4">
-            <h3 className="text-sm text-gray-300 mb-0.5">Category</h3>
-            <input
-              onChange={AdminTaskCreation}
-              name="category"
-              value={taskCreate.category}
-              className="text-white placeholder-gray-400 text-sm py-1 px-2 w-4/5 rounded outline-none bg-transparent border border-gray-500"
-              type="text"
-              placeholder="dev, design etc.."
-            />
-          </div>
+        <div className="space-y-4">
+          <input
+            name="title"
+            value={task.title}
+            onChange={TaskAssign}
+            className="input"
+            type="text"
+            placeholder="Task Title"
+          />
+          <input
+            name="date"
+            value={task.date}
+            onChange={TaskAssign}
+            className="input"
+            type="date"
+          />
+          <input
+            name="assign"
+            value={task.assign}
+            onChange={TaskAssign}
+            className="input"
+            type="text"
+            placeholder="Assign To"
+          />
+          <input
+            name="category"
+            value={task.category}
+            onChange={TaskAssign}
+            className="input"
+            type="text"
+            placeholder="Category"
+          />
         </div>
 
-        <div className="w-full lg:w-2/5 flex flex-col items-start">
-          <h3 className="text-sm text-gray-300 mb-0.5">Description</h3>
+        <div className="flex flex-col gap-4">
           <textarea
-            onChange={AdminTaskCreation}
-            name="desc"
-            value={taskCreate.desc}
-            className="text-white placeholder-gray-400  w-full h-44 text-sm py-2 px-4 rounded outline-none bg-transparent border border-gray-400"
+            name="description"
+            value={task.description}
+            onChange={TaskAssign}
+            className="input h-40"
+            placeholder="Description"
           ></textarea>
-          <button className="bg-emerald-500 py-3 hover:b-emerald-600 px-5 rounded text-sm mt-4 w-full cursor-pointer">
+          <button className="bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg">
             Create Task
           </button>
         </div>
