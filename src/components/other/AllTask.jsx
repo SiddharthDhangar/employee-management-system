@@ -7,7 +7,7 @@ const AllTask = () => {
     <div className="bg-[#111827] p-6 rounded-xl shadow-md">
       <h2 className="text-xl text-white font-semibold mb-4">Employee Tasks</h2>
 
-      <div className="grid grid-cols-5 text-gray-400 text-sm border-b border-gray-700 pb-2">
+      <div className="flex flex-col md:grid md:grid-cols-5 text-white py-3 border-b border-gray-300 gap-2">
         <span>Name</span>
         <span>New</span>
         <span>Active</span>
@@ -18,7 +18,7 @@ const AllTask = () => {
       {userData.map((item) => (
         <div
           key={item.id}
-          className="grid grid-cols-5 text-white py-3 border-b border-gray-800"
+          className="bg-[#1f2937] p-4 rounded-lg mb-3 md:grid md:grid-cols-5 md:bg-transparent md:p-4 md:rounded-none md:mb-0 border-b border-gray-300"
         >
           <span>{item.firstName}</span>
           <span className="text-blue-400">{item.taskCounts.newTask}</span>
