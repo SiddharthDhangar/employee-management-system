@@ -18,6 +18,3 @@ A web-based Employee Management System to manage employee data, task assignment,
 1. Clone the repository
 2. Run `npm install`
 3. Run `npm start`
-
-## Author
-Your Name
